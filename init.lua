@@ -143,7 +143,7 @@ do
   -- Decrease mapped sequence wait time
   vim.o.timeoutlen = 300
 
-  -- /onfigure how new splits should be opened
+  -- Configure how new splits should be opened
   vim.o.splitright = true
   vim.o.splitbelow = true
 
@@ -220,10 +220,10 @@ do
   vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
   -- TIP: Disable arrow keys in normal mode
-  vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
-  vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
-  vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
-  vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+  -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+  -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+  -- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+  -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
   -- Keybinds to make split navigation easier.
   --  Use CTRL+<hjkl> to switch between windows
@@ -819,20 +819,15 @@ do
 
   -- NOTE: You can also specify plugin using a version range for its git tag.
   --  See `:help vim.version.range()` for more info
-  vim.pack.add {
-    { src = gh 'L3MON4D3/LuaSnip', version = vim.version.range '2.*' },
-    gh 'rafamadriz/friendly-snippets',
-    gh 'windwp/nvim-autopairs',
-  }
+  vim.pack.add { { src = gh 'L3MON4D3/LuaSnip', version = vim.version.range '2.*' } }
   require('luasnip').setup {}
 
   -- `friendly-snippets` contains a variety of premade snippets.
   --    See the README about individual language/framework/plugin snippets:
   --    https://github.com/rafamadriz/friendly-snippets
+  --
+  vim.pack.add { gh 'rafamadriz/friendly-snippets' }
   require('luasnip.loaders.from_vscode').lazy_load()
-
-  -- Insert and delete matching brackets, quotes, and other pairs.
-  require('nvim-autopairs').setup {}
 
   -- [[ Autocomplete Engine ]]
   vim.pack.add { { src = gh 'saghen/blink.cmp', version = vim.version.range '1.*' } }
@@ -976,7 +971,7 @@ do
   -- require 'kickstart.plugins.debug'
   -- require 'kickstart.plugins.indent_line'
   -- require 'kickstart.plugins.lint'
-  -- require 'kickstart.plugins.autopairs'
+  require 'kickstart.plugins.autopairs'
   -- require 'kickstart.plugins.neo-tree'
   require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
 
