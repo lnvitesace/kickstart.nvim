@@ -261,10 +261,6 @@ do
     callback = function() vim.hl.on_yank() end,
   })
 
-  -- Rename variables
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename variable' })
-end
-
 -- ============================================================
 -- SECTION 3: PLUGIN MANAGER INTRO
 -- vim.pack intro, build hooks
