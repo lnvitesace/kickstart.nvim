@@ -743,15 +743,22 @@ do
   ---@type table<string, vim.lsp.Config>
   local servers = {
     clangd = {},
-    -- gopls = {},
-    -- pyright = {},
+    gopls = {},
+    pyright = {
+      settings = { pyright = { disableOrganizeImports = true } },
+      before_init = function(_, config)
+        local py = config.root_dir and vim.fs.joinpath(config.root_dir, '.venv', 'bin', 'python')
+        if py and vim.uv.fs_stat(py) then config.settings.python = vim.tbl_deep_extend('force', config.settings.python or {}, { pythonPath = py }) end
+      end,
+    },
+    ruff = { on_attach = function(c) c.server_capabilities.hoverProvider = false end },
     -- tsc = {},
     --
     -- Some languages (like rust) have entire language plugins that can be useful:
     --    https://github.com/mrcjkb/rustaceanvim
     --
     -- But for many setups, the LSP (`rust_analyzer`) will work just fine
-    -- rust_analyzer = {},
+    rust_analyzer = {},
 
     stylua = {}, -- Used to format Lua code
 
@@ -855,7 +862,7 @@ do
     formatters_by_ft = {
       -- rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
-      -- python = { "isort", "black" },
+      python = { 'ruff_fix', 'ruff_organize_imports', 'ruff_format' },
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
       -- javascript = { "prettierd", "prettier", stop_after_first = true },
@@ -928,7 +935,7 @@ do
     },
 
     sources = {
-      default = { 'lsp', 'path', 'snippets' },
+      default = { 'lsp', 'path', 'snippets', 'buffer' },
     },
 
     snippets = { preset = 'luasnip' },
